@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import tw from 'twrnc';
 
 export default function App() {
@@ -7,21 +7,29 @@ export default function App() {
   const [age, setAge] = React.useState('35');
 
   const [people, setPeople] = React.useState([
-    { name: 'angel', age: 35 },
-    { name: 'euan', age: 25 },
-    { name: 'john', age: 40 },
-    { name: 'lina', age: 30},
-    { name: 'jane', age: 20},
-    { name: 'joe', age: 50},
-    { name: 'jim', age: 45},
-    { name: 'jill', age: 55},
+    { name: 'angel', age: 35, id: '1' },
+    { name: 'euan', age: 25, id: '2' },
+    { name: 'john', age: 40, id: '3' }, 
+    { name: 'lina', age: 30, id: '4' },
+    { name: 'jane', age: 20, id: '5' },
+    { name: 'joe', age: 50, id: '6'},
+    { name: 'jim', age: 45, id: '7'},
+    { name: 'jill', age: 35, id: '8' },
   ]);
+
   const classes = tw.style(
   'flex items-center mt-10 p-4 android:pt-2', 
   name === 'angel' ? 'bg-pink-200' 
   : name === 'euan' ? 'bg-green-200'
   : 'bg-white'
   );
+
+  const pressHandler = (id) => {
+    console.log(id);
+    setPeople((prevPeople) => {
+      return prevPeople.filter(person => person.id !== id);
+    });
+  };
 
   return (
     <>
@@ -62,7 +70,7 @@ export default function App() {
           </View>
         ))}
       </ScrollView> */}
-      <FlatList
+      {/* <FlatList
         data={people}
         renderItem={({ item }) => (
           <View style={tw`bg-gray-200 p-2 m-2`}>
@@ -70,6 +78,21 @@ export default function App() {
             <Text>{item.age}</Text>
           </View>
         )}
+        keyExtractor={(item) => item.id}
+      /> */}
+      <FlatList
+      style={tw`mt-10`}
+        data={people}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={tw`bg-gray-200 p-2 m-2`}
+            onPress={() => pressHandler(item.id)}
+          >
+            <Text>{item.name}</Text>
+            <Text>{item.age}</Text>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id}
       />
     </>
   );
