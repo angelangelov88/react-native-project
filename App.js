@@ -1,6 +1,9 @@
 import React from 'react';
 import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import tw from 'twrnc';
+import Header from './components/Header';
+import ToDoItem from './components/ToDoItem';
+import AddToDo from './components/AddToDo';
 
 export default function App() {
   const [name, setName] = React.useState('angel');
@@ -17,6 +20,12 @@ export default function App() {
     { name: 'jill', age: 35, id: '8' },
   ]);
 
+  const [todos, setTodos] = React.useState([
+    { text: 'buy coffee'        ,  key: '1' },
+    { text: 'create and app'    ,  key: '2' },
+    { text: 'play on the switch',  key: '3' }
+  ]);
+
   const classes = tw.style(
   'flex items-center mt-10 p-4 android:pt-2', 
   name === 'angel' ? 'bg-pink-200' 
@@ -31,8 +40,40 @@ export default function App() {
     });
   };
 
+  const pressHandler2 = (key) => {
+    console.log(key);
+    setTodos((prevTodos) => {
+      return prevTodos.filter(todo => todo.key !== key);
+    });
+  };
+
+  const addItem = (text) => {
+    setTodos((prevTodos) => {
+      return [
+        { text: text, key: Math.random().toString() },
+        ...prevTodos
+      ];
+    });
+  };
+
   return (
     <>
+    <View style={tw.style('bg-white flex-1')}>
+      <Header />
+      <View style={tw.style('p-10')}>
+        {/* To do form */}
+        <AddToDo addItem={addItem} />
+        <View style={tw.style('mt-5')}>
+          <FlatList style={tw.style('')}
+            data={todos}
+            renderItem={({ item }) => (
+                <ToDoItem item={item} pressHandler={pressHandler2} />
+            )}
+          />
+
+        </View>
+      </View>
+    </View>
       {/* <View style={classes}>
         <View style={tw.style('mt-4')}>
           <Button
@@ -80,7 +121,7 @@ export default function App() {
         )}
         keyExtractor={(item) => item.id}
       /> */}
-      <FlatList
+      {/* <FlatList
       style={tw`mt-10`}
         data={people}
         renderItem={({ item }) => (
@@ -93,7 +134,7 @@ export default function App() {
           </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}
-      />
+      /> */}
     </>
   );
 }
