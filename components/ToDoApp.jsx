@@ -58,16 +58,22 @@ export default function ToDoApp() {
 
   return (
     <>
-    {/* <TouchableWithoutFeedback onPress={() => {
+    <TouchableWithoutFeedback onPress={() => {
       Keyboard.dismiss();
       console.log('dismissed keyboard');
-    }}> */}
+    }}>
       <View style={tw.style('bg-white flex-1')}>
         <Header />
         <View style={tw.style('p-10 flex-1')}>
           <AddToDo addItem={addItem} />
-          <View style={tw.style('mt-5 flex-')}>
-            <FlatList style={tw.style('h-full bg-red-400')}
+                <TextInput
+                  style={tw.style('mb-3 px-2 py-2 border-b border-b-gray-400')}
+                  placeholder='new todo...'
+                  onChangeText={() => console.log('text changed')}
+                />
+
+          <View style={tw.style('mt-5 flex-1')}>
+            <FlatList style={tw.style('')}
               data={todos}
               renderItem={({ item }) => (
                   <ToDoItem item={item} pressHandler={pressHandler2} />
@@ -77,7 +83,7 @@ export default function ToDoApp() {
           </View>
         </View>
       </View>
-    {/* </TouchableWithoutFeedback> */}
+    </TouchableWithoutFeedback>
       {/* <View style={classes}>
         <View style={tw.style('mt-4')}>
           <Button
