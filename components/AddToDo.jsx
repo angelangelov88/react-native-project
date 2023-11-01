@@ -10,7 +10,7 @@ export default function AddToDo({ addItem }) {
   };
 
   return (
-    <View style={tw.style('')}>
+    <View style={tw.style('h-12')}>
       <TextInput
         style={tw.style('mb-3 px-2 py-2 border-b border-b-gray-400')}
         placeholder='new todo...'
